@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
  
         Console.WriteLine("=== 컬렉션 청킹 테스트 ===\n");
 
@@ -43,35 +38,35 @@ public static class ChunkExtensions
 {
     public static IEnumerable<IEnumerable<T>> Chunk<T>(this IEnumerable<T> source , int size)
     {
-        if (size <= 0)
-        {
-            throw new ArgumentException("청크 크기는 1 이상어야 합니다.", nameof(size));
-        }
         if (source == null)
         {
             throw new ArgumentNullException(nameof(source));
 
 
         }
+        if (size <= 0)
+        {
+            throw new ArgumentException("청크 크기는 1 이상어야 합니다.", nameof(size));
+        }
         return ChunkIterator(source, size);
         
     }
 
-    public static IEnumerable<IEnumerable<T>> ChunkIterator<T>(this IEnumerable<T> source, int size)
+    public static IEnumerable<IEnumerable<T>> ChunkIterator<T>(IEnumerable<T> source, int size)
     {
         List<T> chunk = new List<T>(size);
 
         foreach(var item in source)
         {
             chunk.Add(item);
-            if(chunk.Count == size)
+            if(chunk.Count == size)//현재 청크가 지정된 크기에 도달했는지 확인
             {
-                yield return chunk;
-                chunk = new List<T>(size);
+                yield return chunk;////현재 청크를 반환
+                chunk = new List<T>(size);//새로운 청크를 시작하기 위해 리스트 초기화
             }
         }
 
-        if(chunk.Count >  0)
+        if (chunk.Count > 0)
         {
             yield return chunk;
         }
