@@ -1,6 +1,26 @@
 using System;
 
-// README.md를 읽고 코드를 작성하세요.
+// README.m
+Console.WriteLine("=== 회문 판별 테스트 ===");
+
+ 
+string[] testCases = {
+            "토마토",
+            "기러기",
+            "level",
+            "Level",
+            "A man, a plan, a canal: Panama",
+            "race a car",
+            "hello",
+            "가나다",
+            ""
+        };
+foreach (string testCase in testCases)
+{
+    bool result = testCase.IsPalindrome();
+    Console.WriteLine($"{testCase} -> {result}");
+}
+
 
 
 
@@ -10,48 +30,42 @@ public static class StringExtensions
     {
         //  null / 빈 문자열 guard clause 처리
         //└─ null이나 ""이면 즉시 false 반환
-        if (string.IsNullOrEmpty(str))
-        {
-            return false;
-        }
+        if (string.IsNullOrEmpty(str)) return false;  
+
 
         // 대칭 비교를 위한 인덱스 설정
         int left = 0;
         int right = str.Length - 1;
+        bool hasvalidchar = false;
 
         while (left < right)
         {
-            // 좌우 문자가 다르면 false
-            if (str[left] != str[right])
+            while (left < right && !char.IsLetterOrDigit(str[left]))
+            //└─ 왼쪽에서 유효한 문자(영문자 또는 숫자)가 나올 때까지 left 인덱스 이동
             {
-                return false;
+                left++;
             }
-            left++;
-            right--;
-        }
+            while (left < right && !char.IsLetterOrDigit(str[right]))
+            //└─ 오른쪽에서 유효한 문자(영문자 또는 숫자)가 나올 때까지 right 인덱스 이동
+            {
+                right--;
+            }
+            // 좌우 문자가 다르면 false
+            if (left < right)
+            {
+                hasvalidchar = true;
+                if (char.ToLower(str[left]) != char.ToLower(str[right]))
+                //└─ 대소문자 구분 없이 비교
+                {
+                    return false;//└─ 좌우 문자가 다르면 회문이 아님
+                }
+                left++;
+                right--;
+            }
 
-        return true;
+        }
+        // 유효한 문자가 하나도 없으면 false
+        return hasvalidchar; //└─ 모든 유효한 문자가 대칭이면 true 반환
     }
 }
-//public static class Palindrome
-//{
-//    public static bool IsPalindrome(string input)
-//    {
-//        // 입력 문자열을 소문자로 변환하고 공백을 제거합니다.
-//        string processedInput = input.ToLower().Replace(" ", "");
-
-//        // 문자열의 길이를 구합니다.
-//        int length = processedInput.Length;
-
-//        // 문자열의 절반까지만 비교합니다.
-//        for (int i = 0; i < length / 2; i++)
-//        {
-//            if (processedInput[i] != processedInput[length - 1 - i])
-//            {
-//                return false; // 일치하지 않으면 회문이 아닙니다.
-//            }
-//        }
-
-//        return true; // 모든 문자가 일치하면 회문입니다.
-//    }
-//}
+ 
