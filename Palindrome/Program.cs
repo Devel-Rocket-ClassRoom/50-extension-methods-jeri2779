@@ -28,8 +28,8 @@ public static class StringExtensions
 {
     public static bool IsPalindrome(this string str)
     {
-        //  null / 빈 문자열 guard clause 처리
-        //└─ null이나 ""이면 즉시 false 반환
+        
+        
         if (string.IsNullOrEmpty(str)) return false;  
 
 
@@ -41,12 +41,12 @@ public static class StringExtensions
         while (left < right)
         {
             while (left < right && !char.IsLetterOrDigit(str[left]))
-            //└─ 왼쪽에서 유효한 문자(영문자 또는 숫자)가 나올 때까지 left 인덱스 이동
+            //└─  left 인덱스 이동
             {
                 left++;
             }
             while (left < right && !char.IsLetterOrDigit(str[right]))
-            //└─ 오른쪽에서 유효한 문자(영문자 또는 숫자)가 나올 때까지 right 인덱스 이동
+            //└─  right 인덱스 이동
             {
                 right--;
             }
@@ -57,7 +57,7 @@ public static class StringExtensions
                 if (char.ToLower(str[left]) != char.ToLower(str[right]))
                 //└─ 대소문자 구분 없이 비교
                 {
-                    return false;//└─ 좌우 문자가 다르면 회문이 아님
+                    return false;//└─ 좌우 문자가 다르면 회문x
                 }
                 left++;
                 right--;
