@@ -38,12 +38,12 @@ public static class CollectionExtensions
     public static void Shuffle<T>(this IList<T> list)
        
     {
-        if(list == null)
+        if(list == null)//예외 처리: 리스트가 null인 경우 .
         {
             throw new ArgumentNullException(nameof(list));
         }
 
-        Random random = Random.Shared;// C# 9.0에서 도입된 Random.Shared는 스레드 안전한 단일 인스턴스 Random 객체를 제공합니다.
+        Random random = Random.Shared; 
         int n = list.Count;// 리스트의 요소 수 저장
 
         for (int i  = n -1; i > 0; i--)
